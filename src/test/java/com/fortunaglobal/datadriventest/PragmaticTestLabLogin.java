@@ -3,6 +3,8 @@ package com.fortunaglobal.datadriventest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -22,9 +24,17 @@ public class PragmaticTestLabLogin {
         driver.findElement(By.id("txtPassword")).sendKeys(password);
         driver.findElement(By.id("btnLogin")).click();
         Thread.sleep(5000);
-        System.out.println(driver.getTitle());
-       // driver.quit();
+      //  System.out.println(driver.getTitle());
+        Assert.assertTrue(driver.getTitle().contains("PTL-DemoHRM"),"User is not able to login - Invalid credential");
+        System.out.println("page title verified - user is able to login successfully");
     }
+
+    @AfterMethod
+    public void tearDown(){
+        driver.quit();
+    }
+
+
     @DataProvider(name= "PragmaticTestData")
     public Object[][] passData(){  // object can pass any data type.
         Object data[][] = new Object[3][2];
